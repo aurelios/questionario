@@ -1,0 +1,95 @@
+create table item_pergunta (
+    id_item_pergunta bigint AUTO_INCREMENT NOT NULL,
+    data_ult_alteracao timestamp not null,
+    nm_item varchar(80),
+    usuario_ult_alteracao varchar(150) not null,	
+    versao integer not null,
+    id_pergunta bigint not null,
+    primary key (id_item_pergunta)
+);
+ create table pergunta (
+    id_pergunta bigint AUTO_INCREMENT NOT NULL,
+    data_ult_alteracao timestamp not null,
+    ds_pergunta varchar(150) not null,
+    id_questao_aberta varchar(1) not null,
+	nr_sequencial integer(8),
+    usuario_ult_alteracao varchar(150) not null,
+    versao integer not null,
+    id_questionario bigint not null,
+    primary key (id_pergunta)
+);
+ 
+ create table questionario (
+    id_questionario bigint AUTO_INCREMENT NOT NULL,
+    data_ult_alteracao timestamp not null,
+    ds_questionario varchar(150) not null,
+    usuario_ult_alteracao varchar(150) not null,
+	nr_sequencial integer(8),
+    versao integer not null,
+    primary key (id_questionario)
+);
+
+ create table resposta_item_pergunta (
+    id_resposta_item_pergunta bigint AUTO_INCREMENT NOT NULL,
+    data_ult_alteracao timestamp not null,
+    usuario_ult_alteracao varchar(150) not null,
+	id_checked char(1),
+    versao integer not null,
+    id_item_pergunta bigint,
+    id_resposta_pergunta bigint,
+    primary key (id_resposta_item_pergunta)
+);
+ create table resposta_pergunta (
+    id_resposta_pergunta bigint AUTO_INCREMENT NOT NULL,
+    data_ult_alteracao timestamp not null,
+    ds_resposta varchar(255) null,
+    usuario_ult_alteracao varchar(150) not null,
+    versao integer not null,
+    id_pergunta bigint not null,
+    id_resposta_questionario bigint not null,
+    primary key (id_resposta_pergunta)
+);
+ create table resposta_questionario (
+    id_resposta_questionario bigint AUTO_INCREMENT NOT NULL,
+    data_ult_alteracao timestamp not null,
+    email varchar(100) not null,
+    usuario_ult_alteracao varchar(150) not null,
+    versao integer not null,
+    id_questionario bigint not null,
+    primary key (id_resposta_questionario)
+);
+
+ alter table item_pergunta 
+    add constraint FK_ITEMPERGUNTA_PERGUNTA 
+    foreign key (id_pergunta) 
+    references pergunta(id_pergunta);
+	
+ alter table pergunta 
+    add constraint FK_PERGUNTA2_QUESTIONARIO 
+    foreign key (id_questionario) 
+    references questionario(id_questionario);
+ 
+ alter table resposta_questionario 
+    add constraint FK_RESPOSTAQUESTIONARIO_QUESTIONARIO 
+    foreign key (id_questionario) 
+    references questionario(id_questionario) ;
+    
+ alter table resposta_item_pergunta 
+    add constraint FK_RESPOSTAITEMPERGUNTA_ITEMPERGUNTA 
+    foreign key (id_item_pergunta) 
+    references item_pergunta(id_item_pergunta) ;
+    
+ alter table resposta_item_pergunta 
+    add constraint FK_RESPOSTAITEMPERGUNTA_RESPOSTAPERGUNTA 
+    foreign key (id_resposta_pergunta) 
+    references resposta_pergunta(id_resposta_pergunta) ;
+    
+ alter table resposta_pergunta 
+    add constraint FK_RESPOSTAPERGUNTA_PERGUNTA 
+    foreign key (id_pergunta) 
+    references pergunta(id_pergunta) ;
+    
+ alter table resposta_pergunta 
+    add constraint FK_RESPOSTAPERGUNTA_RESPOSTAQUESTIONARIO 
+    foreign key (id_resposta_questionario) 
+    references resposta_questionario(id_resposta_questionario);

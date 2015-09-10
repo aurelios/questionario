@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plc="http://www.powerlogic.com.br/plc" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition>	
+		<plcf:iteracao var="respostaItemPergunta" id="respostaItemPergunta" value="#{respostaPergunta.respostaItemPergunta}" columnClasses="celulaFormulario" headerClass="celulaFormulario"> 
+			<h:column>
+				<td width="3%"/>
+			</h:column>
+			<h:column>
+				<td width="2%" style="margin-left: 5px">					
+					<plcf:caixaMarcacao id="check" 	obrigatorio="N"	value="#{respostaItemPergunta.check}"/>
+				</td>
+			</h:column>
+			<h:column>					
+				<plcf:exibe value="(#{respostaItemPergunta.itemPergunta.nrSequencial}) #{respostaItemPergunta.itemPergunta}" /> 
+			</h:column> 
+		</plcf:iteracao> 
+	</ui:composition> 
+</html>

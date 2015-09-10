@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plc="http://www.powerlogic.com.br/plc" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition>
+	<h:column rendered="#{pergunta.idQuestaoAberta ne 'S'}">
+		<fieldset class="plc-fieldset">
+			<legend class="plc-fieldset-legend">#{msg['questionario.subdetalhe.1.titulo.comp']}</legend>
+			<plcf:iteracao var="itemPergunta" id="itemPergunta"
+				value="#{pergunta.itemPergunta}" columnClasses="celulaFormulario"
+				headerClass="celulaFormulario">
+				<h:column>
+					<h:outputText value="#{rowCounter.indexSubDet}." />
+				</h:column>
+				<h:column rendered="#{empty requestScope.visualizaDocumentoPlc}">
+					<f:facet name="header">
+						<plcf:tituloExclusao>Exc.</plcf:tituloExclusao>
+					</f:facet>
+					<span class="celulaFormularioCaixaMarcacao"> <plcf:caixaExclusao
+							id="indExcPlc" value="#{itemPergunta.indExcPlc}" />
+					</span>
+				</h:column>				
+				<h:column>
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.nrSequencial']}" />
+					</f:facet>
+					<plcf:texto id="nrSequencial" tamanho="3" disabled="true" value="#{itemPergunta.nrSequencial}" ajudaChave="ajuda.nrSequencial" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<plcf:titulo value="#{msg['label.nmItem']}" />
+					</f:facet>
+					<plcf:texto id="nmItem" value="#{itemPergunta.nmItem}" tamanho="50"
+						ajudaChave="ajuda.nmItem" showRequired="true" />
+				</h:column>
+			</plcf:iteracao>
+		</fieldset>
+	</h:column>
+</ui:composition> 
+</html>

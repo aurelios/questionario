@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plc="http://www.powerlogic.com.br/plc" 
+	xmlns:plct="http://www.powerlogic.com.br/plct" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition>	
+		<plcf:iteracao var="respostaPergunta" id="respostaPergunta" value="#{respostaquestionario.respostaPergunta}" columnClasses="celulaFormulario" headerClass="celulaFormulario"> 
+			<h:column>		
+				<plcf:exibe inlineStyle="font-weight: bold;" value="#{respostaPergunta.pergunta.nrSequencial}.#{respostaPergunta.pergunta}"/>				
+			</h:column>
+			<h:column>		
+				<plcf:area rendered="#{respostaPergunta.pergunta.idQuestaoAberta == 'S'}"  inlineStyle="margin-left:30px;" value="#{respostaPergunta.dsResposta}" colunas="80" rows="3"/>				
+			</h:column>	
+			<h:column>		
+				<tr>		
+					<plct:subDetalhe caminho="/WEB-INF/fcls/respostaquestionario/respostaquestionarioSubDet.xhtml"/>
+				</tr>		
+			</h:column>	
+		</plcf:iteracao> 	
+	</ui:composition> 
+</html>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:plc="http://www.powerlogic.com.br/plc" 
+	xmlns:plct="http://www.powerlogic.com.br/plct" 
+	xmlns:plcf="http://www.powerlogic.com.br/plcf" 
+	xmlns:tr="http://myfaces.apache.org/trinidad" 
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">  
+	<ui:composition>
+
+
+	
+	<plcf:escondido id="perguntaSize" value="#{questionario.perguntaSize}"/>
+	<plcf:botaoAcao id="submitAjax" partialSubmit="false" ></plcf:botaoAcao>
+		<fieldset class="plc-fieldset"> 
+			<legend class="plc-fieldset-legend">#{msg['questionario.titulo.detalhe']}</legend>  
+			<plcf:iteracao var="pergunta" id="pergunta" value="#{questionario.pergunta}" columnClasses="celulaFormulario" headerClass="celulaFormulario"> 				
+				<h:column> 
+					<h:outputText value="#{rowCounter.index}."/> 
+				</h:column>  
+				<h:column rendered="#{empty requestScope.visualizaDocumentoPlc}"> 
+					<plcf:tituloExclusao>Exc.</plcf:tituloExclusao>					
+					<span class="celulaFormularioCaixaMarcacao">
+						<plcf:caixaExclusao id="indExcPlc" value="#{pergunta.indExcPlc}"/>
+					</span> 
+				</h:column>
+				<h:column> 
+					<plcf:titulo value="#{msg['label.nrSequencial']}"/>							
+					<plcf:texto   id="nrSequencial" disabled="true" value="#{pergunta.nrSequencial}" tamanho="3" ajudaChave="ajuda.nrSequencial" showRequired="true"/> 
+					
+				</h:column>	
+				<h:column>					
+					<plcf:titulo value="#{msg['label.idQuestaoAberta']}"/>
+					<plcf:comboEstatico  id="idQuestaoAberta" onchange="document.getElementById('corpo:formulario:submitAjax').click();" value="#{pergunta.idQuestaoAberta}" internacionalizado="S" dominio="SimNao" exibeBranco="S" ajudaChave="ajuda.idQuestaoAberta" showRequired="true"/>
+				</h:column>  
+				<h:column> 
+					<plcf:titulo value="#{msg['label.dsPergunta']}"/>								
+					<plcf:texto  id="dsPergunta" value="#{pergunta.dsPergunta}" tamanho="80" ajudaChave="ajuda.dsPergunta" showRequired="true"/> 					
+				</h:column>						
+				<h:column>
+					<f:facet name="header">
+						<span class="plc-title af_outputLabel"/>
+					</f:facet>  					
+					<plct:subDetalhe  caminho="/WEB-INF/fcls/questionario/questionarioSubDet.xhtml"/> 									
+				</h:column>				
+			</plcf:iteracao> 
+		</fieldset> 
+		
+		<script type="text/javascript" charset="utf-8">
+		//<![CDATA[	
+		
+			(function escondeSubdetalhe(){
+				var size = document.getElementById('corpo:formulario:perguntaSize').value;
+				for(var index = 0; index < size;index++){
+					var idQuestaoAberta = document.getElementById('corpo:formulario:pergunta:'+index+':idQuestaoAberta').value;
+					if(idQuestaoAberta == 0){
+						document.getElementById('novoSubdetalhe:'+ (index+1)).style.display = 'none';
+					}
+				}
+			})();
+			
+		//]]>
+		</script>
+		
+	</ui:composition> 
+</html>

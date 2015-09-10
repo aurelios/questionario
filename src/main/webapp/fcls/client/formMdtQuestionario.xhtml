@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:plcf="http://www.powerlogic.com.br/plcf"
+	xmlns:plct="http://www.powerlogic.com.br/plct"
+	xmlns:tr="http://myfaces.apache.org/trinidad"
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">
+	
+	Realiza a renderizacao de formulario tipo Mestre-Detalhe em ergonomia de "caixas verticais" (Vertical Box ou VBox), onde
+	cada seção do formulário é ordenada uma abaixo da outra, de acordo com uma numeração.
+	
+	<ui:composition template="/fcls/template/PlcGeralTemplate.xhtml">
+		<ui:define name="plc-corpo-formulario">
+	 		
+
+	 		
+		 	<div id="container">
+		 	
+		 	<fieldset class="plc-fieldset"> 
+		 		<c:set var="sufixo" value="#{requestScope.formPattern}"/>
+				
+				<c:if test="#{plct:execOneArg (plcConfigUrlColaboracao, 'exibeAba', 0)}">
+					<div id="#{plcAliasPrefixoAction}Mestre">
+						<ui:include src="#{requestScope.dirBaseFacelets}/#{plcAliasPrefixoAction}#{sufixo}.xhtml" />
+					</div>
+				</c:if>
+				<c:forEach begin="1" end="#{plcConfigUrlColaboracao.numComponentes}" varStatus="status">
+					<c:if test="#{plct:execOneArg (plcConfigUrlColaboracao, 'exibeAba', status.index)}">
+						<div id="#{plcAliasPrefixoAction}Mestre#{status.index + 1}">
+							<ui:include src="#{requestScope.dirBaseFacelets}/#{plcAliasPrefixoAction}#{sufixo}#{status.index + 1}.xhtml" />
+						</div>	
+					</c:if>	
+				</c:forEach>
+				<c:forEach begin="1" end="#{plcConfigUrlColaboracao.numDetalhes}" varStatus="status">				
+					<c:set var="nomeDetalhe" value="#{plct:execOneArg (plcConfigUrlColaboracao, 'getNomeDetalhe', status.index - 1)}"/>
+					<c:set var="colecaoNomeDetPlc" value="#{nomeDetalhe}" scope="request" />
+					<c:set var="colecaoNomeSubDetPlc" value="null" scope="request" />
+				
+					<c:if test="#{plct:execOneArg (plcConfigUrlColaboracao, 'exibeAba', plcConfigUrlColaboracao.numComponentes + status.index)}">
+						<div id="#{plcAliasPrefixoAction}Det#{status.index != 1 ? status.index : ''}">
+							
+							
+							<ui:include src="#{requestScope.dirBaseFacelets}/#{plcAliasPrefixoAction}Det#{status.index != 1 ? status.index : ''}.xhtml" />							
+							
+							
+						</div>	
+					</c:if>			
+					#{plct:execOneArg (rowCounter, 'setIndex', 0)}
+				</c:forEach>
+			
+			</fieldset> 
+			</div>
+			
+		</ui:define>
+	</ui:composition>
+	
+</html>
