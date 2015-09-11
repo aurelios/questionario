@@ -65,7 +65,7 @@ public class ItemPergunta  implements Serializable {
 	
 	
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "nrSequencial") 
+	@Column(name = "NR_SEQUENCIAL") 
 	private Alfabeto nrSequencial;
 
 	public Long getId() {
