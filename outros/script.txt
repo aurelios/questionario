@@ -93,3 +93,6 @@ create table item_pergunta (
     add constraint FK_RESPOSTAPERGUNTA_RESPOSTAQUESTIONARIO 
     foreign key (id_resposta_questionario) 
     references resposta_questionario(id_resposta_questionario);
+
+
+alter table questionario.item_pergunta add NR_SEQUENCIAL INT(8);
